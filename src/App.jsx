@@ -1,53 +1,33 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Routes, Route, Navigate } from "react-router-dom"
+import { useUser } from "@clerk/clerk-react"
+
+// pages
+import PublicPage from "./pages/PublicPage"
+import ProtectedPage from "./pages/ProtectedPage"
+import Login from "./pages/Login"
+import Register from "./pages/Register"
+import PrevApp from './PrevApp'
+
 import './App.css'
-import { SignInButton, useUser, useAuth } from "@clerk/clerk-react"
 
 export default function App() {
   const { user } = useUser()
-  const { signOut } = useAuth()
-
   console.log('user: >>>>>>>>>>>>', user)
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <>
+      <div className="App">
+        <h1 className="font-bold mb-6">
+          Vite + React + Clerk Auth
+        </h1>
       </div>
-      <h1>Vite + React</h1>
-      {!user ? (
-        // <SignInButton />
-        <SignInButton>
-          <button
-            style={{
-              fontSize: '1.25rem',
-              fontWeight: 'bold'
-            }}
-          >
-            Sign in with OAuth
-          </button>
-        </SignInButton>
-      ) : (
-        <>
-          <h3>
-            Hi {user.fullName}!
-          </h3>
-          <button
-            onClick={() => signOut()}
-            style={{
-              fontSize: '1.25rem',
-              fontWeight: 'bold'
-            }}
-          >
-            Sign Out
-          </button>
-        </>
-      )}
-    </div>
+      <Routes>
+        <Route path="/" element={<PublicPage />} />
+        <Route path="/sign-in" element={<Login />} />
+        <Route path="/sign-up" element={<Register />} />
+        <Route path="/protected" element={user ? <ProtectedPage /> : <Navigate to='/sign-in' />} />
+        <Route path="/prev-app" element={<PrevApp />} />
+      </Routes>
+    </>
   )
 }
