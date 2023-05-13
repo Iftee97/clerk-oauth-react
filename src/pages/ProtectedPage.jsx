@@ -11,19 +11,19 @@ export default function ProtectedPage() {
       <h1>
         Protected page
       </h1>
-      <div className='my-4 flex items-center justify-center gap-2'>
-        <p className='text-center text-lg'>
+      <div className='my-4'>
+        <p className='text-center text-lg mb-3'>
           You are logged in as {' '}
           <span className='text-blue-500'>
             {user.firstName} {user.lastName}
           </span>
         </p>
-        <span
-          onClick={() => signOut()}
+        <button
           className='text-lg text-red-500 hover:underline cursor-pointer'
+          onClick={() => signOut()}
         >
           sign out
-        </span>
+        </button>
       </div>
       <div className='my-6 flex items-center justify-center'>
         <Link to="/">
